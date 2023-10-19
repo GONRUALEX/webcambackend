@@ -1,0 +1,52 @@
+<Configuration status="WARN" name="MyApp" packages="">
+    <!-- Define los Appenders (destinos) de los registros -->
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="ACCEPT" />
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+        <RollingFile name="RollingFile" fileName="/var/log/myapp/myapp.log" filePattern="/var/log/myapp/myapp-%d{MM-dd-yyyy}-%i.log.gz">
+            <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL" />
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true" />
+                <SizeBasedTriggeringPolicy size="100 MB" />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <!-- Define los Loggers (registradores) y su nivel de registro -->
+    <Loggers>
+        <Root level="ERROR">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingFile" />
+        </Root>
+    </Loggers>
+</Configuration>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" name="MyApp" packages="">
+    <!-- Define los Appenders (destinos) de los registros -->
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="ACCEPT" />
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+        <RollingFile name="RollingFile" fileName="C:/Logs/myapp.log" filePattern="C:/Logs/myapp-%d{MM-dd-yyyy}-%i.log.gz">
+            <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL" />
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true" />
+                <SizeBasedTriggeringPolicy size="100 MB" />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <!-- Define los Loggers (registradores) y su nivel de registro -->
+    <Loggers>
+        <Root level="ERROR">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingFile" />
+        </Root>
+    </Loggers>
+</Configuration>
