@@ -7,19 +7,19 @@ public enum RoleEnum implements TableValueEnum{
 		ROLE_ADMIN("ROLE_ADMIN"), 
 		ROLE_USER("ROLE_USER");
 		
-		private String codi;
+		private String code;
 		
-		private RoleEnum(String codi) {
-			this.codi = codi;
+		private RoleEnum(String code) {
+			this.code = code;
 		}
 		
 		public String getCode() {
-			return codi;
+			return code;
 		}
 		
-		public static RoleEnum fromValue(String codi) {
+		public static RoleEnum fromValue(String code) {
 			for(RoleEnum value: RoleEnum.values()) {
-				if (value.getCode().equals(codi)) {
+				if (value.getCode().equals(code)) {
 					return value;
 				}
 			}

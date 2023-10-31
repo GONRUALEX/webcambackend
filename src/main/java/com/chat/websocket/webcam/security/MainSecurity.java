@@ -108,7 +108,7 @@ public class MainSecurity {
 		 * autenticación.
 		 *
 		 */
-		http.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**", "/swagger-ui.html/**", "/email-password/**",
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/api/users/**","/api/auth/**", "/swagger-ui.html/**", "/email-password/**",
 				"/v3/api-docs/**", "/swagger-ui/index.html", "/api-docs").permitAll().anyRequest().authenticated());
 		/**
 		 * http.exceptionHandling().authenticationEntryPoint(jwtEntryPoint);: Se

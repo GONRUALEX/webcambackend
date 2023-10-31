@@ -10,7 +10,7 @@ public class UserDto {
 	private String lastName1;
 	private String lastName2;
 	private Boolean stateAccount;
-	private String language;
+	private MainTableDto language;
 	private byte[] imagePerfil;
 	private String nameUser;
 	private String email;
@@ -26,7 +26,7 @@ public class UserDto {
 	}
 	
 
-	public UserDto(Long id, String name, String lastName1, String lastName2, Boolean stateAccount, String language,
+	public UserDto(Long id, String name, String lastName1, String lastName2, Boolean stateAccount, MainTableDto language,
 			byte[] imagePerfil, String nameUser, String email, String password, String tokenPassword,
 			List<MainTableDto> roles, String createdBy, Date createdDate, Date lastMofifiedDate, String modifiedBy) {
 		super();
@@ -138,11 +138,11 @@ public class UserDto {
 		this.stateAccount = stateAccount;
 	}
 
-	public String getLanguage() {
+	public MainTableDto getLanguage() {
 		return language;
 	}
 
-	public void setLanguage(String language) {
+	public void setLanguage(MainTableDto language) {
 		this.language = language;
 	}
 

@@ -6,5 +6,7 @@ import com.chat.websocket.webcam.bean.MainTableDto;
 
 public interface MasterTableService {
 
-	//List<MainTableDto> getPlataforma();
+	List<MainTableDto> getRoles();
+	
+	List<MainTableDto> getLanguages();
 }

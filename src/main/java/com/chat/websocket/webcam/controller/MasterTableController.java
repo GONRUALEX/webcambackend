@@ -16,21 +16,28 @@ import com.chat.websocket.webcam.service.MasterTableService;
 
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST, RequestMethod.DELETE})
-@RequestMapping("/mastertable")
+@RequestMapping("/api/mastertable")
 public class MasterTableController  {
 	
 	@Autowired
 	private MasterTableService service;
 	
-	/*@GetMapping(value = "/plataforma")
+	@GetMapping(value = "/roles")
 	@ResponseBody
-	public ResponseEntity<List<MainTableDto>> getPlataforma() {
-		List<MainTableDto> results = service.getPlataforma();
+	public ResponseEntity<List<MainTableDto>> getRoles() {
+		List<MainTableDto> results = service.getRoles();
+		return prepareResponse(results);
+	}
+	
+	@GetMapping(value = "/languages")
+	@ResponseBody
+	public ResponseEntity<List<MainTableDto>> getLanguages() {
+		List<MainTableDto> results = service.getLanguages();
 		return prepareResponse(results);
 	}
 	
 	private ResponseEntity<List<MainTableDto>> prepareResponse(List<MainTableDto> results){
 		return ResponseEntity.ok().body(results);
-	}*/
+	}
 	
 }

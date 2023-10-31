@@ -1,4 +1,4 @@
-package com.chat.websocket.webcam.repository.tablevalue;
+package com.chat.websocket.webcam.model.taulavalor;
 
 import com.chat.websocket.webcam.model.base.TableValue;
 import com.chat.websocket.webcam.model.tablevalue.support.RoleConverter;
@@ -25,6 +25,12 @@ public class Role extends TableValue<RoleEnum> {
 	@Column(name = "CODE")
 	private RoleEnum code;
 
+	public Role() {}
+	
+	public Role(RoleEnum roleEnum) {
+		this.code = roleEnum;
+	}
+	
 	public Long getId() {
 		return id;
 	}

@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chat.websocket.webcam.model.tablevalue.support.RoleEnum;
-import com.chat.websocket.webcam.repository.RoleRepository;
-import com.chat.websocket.webcam.repository.tablevalue.Role;
+import com.chat.websocket.webcam.model.taulavalor.Role;
+import com.chat.websocket.webcam.repository.tablevalue.RoleRepository;
 import com.chat.websocket.webcam.service.RoleService;
 
 import jakarta.transaction.Transactional;
@@ -19,9 +19,10 @@ public class RoleServiceImpl implements RoleService{
 	@Autowired
 	RoleRepository roleRepository;
 
-	public Optional<Role> getByRoleName(RoleEnum codi) {
-		return roleRepository.findByCode(codi);
-	}
+	public Role getByRoleName(RoleEnum code) {
+		Role rol = roleRepository.getByCode(code);	
+		return rol;	
+		}
 
 	public void save(Role role) {
 		roleRepository.save(role);

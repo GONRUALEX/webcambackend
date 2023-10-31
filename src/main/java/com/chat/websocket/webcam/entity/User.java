@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 import com.chat.websocket.webcam.model.base.Auditable;
-import com.chat.websocket.webcam.repository.tablevalue.Role;
+import com.chat.websocket.webcam.model.taulavalor.Languages;
+import com.chat.websocket.webcam.model.taulavalor.Role;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,6 +19,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.NotNull;
@@ -49,7 +53,11 @@ public class User extends Auditable {
 	private String lastName1;
 	private String lastName2;
 	private Boolean stateAccount;
-	private String language;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "language")
+	private Languages language;
+	
 	public User() {
 		super();
 	}
@@ -66,7 +74,7 @@ public class User extends Auditable {
 	
 
 	public User(Long id,  String name, String lastName1, String lastName2, Boolean stateAccount,
-			String language, byte[] imagePerfil, String nameUser, String email,
+			Languages language, byte[] imagePerfil, String nameUser, String email,
 			 String password, String tokenPassword, List<Role> roles) {
 		super();
 		this.id = id;
@@ -163,11 +171,11 @@ public class User extends Auditable {
 		this.stateAccount = stateAccount;
 	}
 
-	public String getLanguage() {
+	public Languages getLanguage() {
 		return language;
 	}
 
-	public void setLanguage(String language) {
+	public void setLanguage(Languages language) {
 		this.language = language;
 	}
 

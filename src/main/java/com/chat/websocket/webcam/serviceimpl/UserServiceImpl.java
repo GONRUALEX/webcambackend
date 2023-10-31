@@ -2,10 +2,16 @@ package com.chat.websocket.webcam.serviceimpl;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,18 +23,21 @@ import org.springframework.stereotype.Service;
 import com.chat.websocket.webcam.bean.JwtDto;
 import com.chat.websocket.webcam.bean.LoginUserDto;
 import com.chat.websocket.webcam.bean.MainTableDto;
+import com.chat.websocket.webcam.bean.SearchFilteringDto;
 import com.chat.websocket.webcam.bean.UserDto;
+import com.chat.websocket.webcam.bean.UserSearchDto;
 import com.chat.websocket.webcam.entity.User;
 import com.chat.websocket.webcam.mapper.UserMapper;
 import com.chat.websocket.webcam.model.tablevalue.support.RoleEnum;
+import com.chat.websocket.webcam.model.taulavalor.Role;
 import com.chat.websocket.webcam.repository.UserRepository;
-import com.chat.websocket.webcam.repository.tablevalue.Role;
 import com.chat.websocket.webcam.security.jwt.JwtProvider;
 import com.chat.websocket.webcam.service.UserService;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springdoc.core.converters.models.Pageable;
 
 
 @Service
@@ -56,8 +65,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<UserDto> getAll() {
-		List<UserDto> modelList = userMapper.toListResultsDto(userRepository.findAll());
+	public Page<UserDto> getAll(SearchFilteringDto<UserSearchDto> search) {
+		PageRequest pageable = PageRequest.of(search.getPage(), search.getSize(), search.getAsc()?Sort.Direction.ASC:Sort.Direction.DESC,search.getOrder());
+		Page<User> dtoList = userRepository.findAllUser(search.getSearch().getName(), search.getSearch().getNameUser(), search.getSearch().getEmail(), search.getSearch().getCreatedDate(), pageable);
+		Page<UserDto> modelList = userMapper.toPageableResultsDto(dtoList);
 		logger.debug("Get all list of users ");
 		return modelList;
 	}
@@ -158,13 +169,26 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		userMapper.dtoToModel(newUser, user);
 		user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+		
+		userRepository.save(user);
+		logger.debug("Create new series with id {}", user.getId());
+		return userMapper.toDto(user);
+	}
+	
+	@Override
+	@Transactional
+	public UserDto update(UserDto userDto) {
+		User user = userRepository.findById(userDto.getId()).get();
+		userMapper.dtoToModel(userDto, user);
+		user.setPassword(passwordEncoder.encode("__Ordenador3S__"));
 		List<Role> roles = new ArrayList<>();
-		roles.add(roleService.getByRoleName(RoleEnum.ROLE_USER).get());
+		Role role = roleService.getByRoleName(RoleEnum.ROLE_USER);
+		roles.add(role);
 		/*
 		 * if (newUser.getRoles().contains("admin")) {
 		 * roles.add(roleService.getByRoleName(RoleEnum.ROLE_ADMIN).get()); }
 		 */
-		user.setRoles(roles);
+		//user.setRoles(roles);
 		userRepository.save(user);
 		logger.debug("Create new series with id {}", user.getId());
 		return userMapper.toDto(user);

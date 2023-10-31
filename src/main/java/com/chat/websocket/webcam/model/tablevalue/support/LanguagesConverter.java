@@ -4,14 +4,14 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 @Converter(autoApply = true)
-public class RoleConverter implements AttributeConverter<RoleEnum, String>{
+public class LanguagesConverter implements AttributeConverter<LanguagesEnum, String>{
 	
-	public String convertToDatabaseColumn(RoleEnum attribute) {
+	public String convertToDatabaseColumn(LanguagesEnum attribute) {
 		String valor = attribute.getCode();
 		return attribute != null ? attribute.getCode() : null;
 	}
 	
-	public RoleEnum convertToEntityAttribute(String code) {
-		return RoleEnum.fromValue(code);
+	public LanguagesEnum convertToEntityAttribute(String code) {
+		return LanguagesEnum.fromValue(code);
 	}
 }
